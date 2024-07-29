@@ -135,20 +135,25 @@
 		}
 
 		function setOperation(operation) {
-			if (display.value === '') return;
+			const display = document.getElementById('display');
+			let currentValue = display.value;
+
 			if (operation === '¬') {
-				// Convertir el valor actual a un número decimal
-				let number = parseBinaryToDecimal(display.value);
+				// Convertir el valor actual a un número entero
+				let number = parseInt(currentValue, 2); // Asumimos que el valor está en binario
 				if (isNaN(number)) {
 					display.value = 'Error';
 					return;
 				}
 
-				// Aplicar la operación NOT bitwise
-				let complementedNumber = ~number & ((1 << display.value.length) - 1);
+				// Obtener la longitud del número binario original
+				let bitLength = currentValue.length;
+
+				// Aplicar la operación NOT bitwise y limitar el resultado a la longitud original
+				let complementedNumber = ~number & ((1 << bitLength) - 1);
 
 				// Convertir el resultado de nuevo a binario
-				let binaryResult = decimalToBinary(complementedNumber);
+				let binaryResult = complementedNumber.toString(2);
 
 				// Mostrar el resultado en el display
 				display.value = binaryResult;
