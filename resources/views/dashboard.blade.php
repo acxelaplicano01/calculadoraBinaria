@@ -84,19 +84,29 @@
 	<body>
 		<div class="calculator-container">
 			<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
-				<input type="text" id="display" disabled
-				placeholder="0"	class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
+				<input type="text" id="display" disabled placeholder=""
+					class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 
 				<div class="buttons grid grid-cols-4 gap-1">
-					<button style="background:#61f8ff;"  class=" p-0 m-1 text-black" onclick="appendNumber('0')">0</button>
-					<button style="background:#61f8ff;"  class=" p-0 m-1 text-black " onclick="appendNumber('1')">1</button>
+					<button style="background:#0061f8;" class=" p-0 m-1 text-black"
+						onclick="appendNumber('0')">0</button>
+					<button style="background:#0061f8;" class=" p-0 m-1 text-black "
+						onclick="appendNumber('1')">1</button>
 					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="clearDisplay()">C</button>
-					<button style="background:#ff6e7f;"class=" p-0 m-1 text-black " onclick="deleteLast()">←</button>
-					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black " onclick="setOperation('+')">+</button>
-					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black " onclick="setOperation('-')">-</button>
-					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black " onclick="setOperation('*')">*</button>
-					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black " onclick="setOperation('/')">/</button>
-					<button style="background:#84f0a1;"  class=" p-0 m-1 text-black col-span-4" onclick="calculate()">=</button>
+					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="deleteLast()">←</button>
+					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
+						onclick="setOperation('+')">+</button>
+					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
+						onclick="setOperation('-')">-</button>
+					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
+						onclick="setOperation('*')">*</button>
+					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
+						onclick="setOperation('/')">/</button>
+
+					<button style="background:#FF25;" class=" p-0 m-1 text-black col-span-1"
+						onclick="setOperation('¬')">¬</button>
+					<button style="background:#84f0a1;" class=" p-0 m-1 text-black col-span-3"
+						onclick="calculate()">=</button>
 				</div>
 			</div>
 		</div>
@@ -126,9 +136,29 @@
 
 		function setOperation(operation) {
 			if (display.value === '') return;
-			firstOperand = display.value;
-			currentOperation = operation;
-			display.value = '';
+			if (operation === '¬') {
+				// Convertir el valor actual a un número decimal
+				let number = parseBinaryToDecimal(display.value);
+				if (isNaN(number)) {
+					display.value = 'Error';
+					return;
+				}
+
+				// Aplicar la operación NOT bitwise
+				let complementedNumber = ~number & ((1 << display.value.length) - 1);
+
+				// Convertir el resultado de nuevo a binario
+				let binaryResult = decimalToBinary(complementedNumber);
+
+				// Mostrar el resultado en el display
+				display.value = binaryResult;
+			} else {
+				firstOperand = display.value;
+				currentOperation = operation;
+				display.value = firstOperand + currentOperation;
+			}
+
+
 		}
 
 		function calculate() {
