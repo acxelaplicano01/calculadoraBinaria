@@ -1,6 +1,8 @@
 <?php
 
+use App\Livewire\Conversiones;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Conversiones as CalConversiones;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,5 +17,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    
+    Route::get('/conversiones', CalConversiones::class)->name('conversiones');
 });

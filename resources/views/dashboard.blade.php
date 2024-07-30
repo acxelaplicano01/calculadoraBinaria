@@ -31,7 +31,7 @@
 				background-color: #E6E6E7;
 				box-shadow: 5px 5px 5px #000;
 				border: 3px solid black;
-				padding-top: 30px;
+				padding-top: 1px;
 			}
 
 			#display {
@@ -45,7 +45,7 @@
 				letter-spacing: -2px;
 				border-radius: 5px;
 				box-shadow: 0 -4px 4px -3px rgba(255, 255, 255, .3), 5px 0 3px -5px rgba(255, 255, 255, .8), 0 5px 5px -3px rgba(0, 0, 0, .5), -3px 0 3px -1px rgba(0, 0, 0, .8), inset 0 -5px 3px -4px rgba(0, 0, 0, .5), inset 5px 0 5px -2px rgba(0, 0, 0, .8);
-				height: 60px;
+				height: 65px;
 				border-radius: 6px;
 				text-align: right;
 				padding-right: 15px;
@@ -58,8 +58,8 @@
 			}
 
 			.buttons {
-				margin-top: 20px;
-				margin-bottom: 30px;
+				margin-top: 10px;
+				margin-bottom: 40px;
 				display: grid;
 				grid-template-columns: repeat(4, 1fr);
 			}
@@ -84,6 +84,7 @@
 	<body>
 		<div class="calculator-container">
 			<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
+				<h1 class="font-medium mb-5 mt-8"></h1>
 				<input type="text" id="display" disabled placeholder=""
 					class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 
@@ -137,7 +138,7 @@
 		function setOperation(operation) {
 			const display = document.getElementById('display');
 			let currentValue = display.value;
-
+			if (display.value === '') return;
 			if (operation === '¬') {
 				// Convertir el valor actual a un número entero
 				let number = parseInt(currentValue, 2); // Asumimos que el valor está en binario
