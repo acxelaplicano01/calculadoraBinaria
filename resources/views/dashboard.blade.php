@@ -73,10 +73,7 @@
 				box-shadow: 3px 2px #666;
 			}
 
-			button:hover {
-				background-color: #E6E6E7;
-				color: #000;
-			}
+			
 		</style>
 	</head>
 
@@ -87,9 +84,9 @@
 				<input type="text" id="display" disabled placeholder=""
 					class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 				<div class="buttons grid grid-cols-4 gap-1">
-					<button style="background:#0061f8;" class=" p-0 m-1 text-black"
+					<button style="background: black;" class=" p-0 m-1 text-white"
 						onclick="appendNumber('0')">0</button>
-					<button style="background:#0061f8;" class=" p-0 m-1 text-black "
+					<button style="background: black;" class=" p-0 m-1 text-white "
 						onclick="appendNumber('1')">1</button>
 					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="clearDisplay()">C</button>
 					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="deleteLast()">←</button>

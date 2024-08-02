@@ -103,7 +103,6 @@
 					<input type="text" id="display" disabled placeholder=""
 						class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 					<select id="conversion" class="w-full mt-2">
-						<option value="">Seleccionar conversión</option>
 						<option value="binarioADecimal">Binario a Decimal</option>
 						<option value="binarioAOctal">Binario a Octal</option>
 						<option value="binarioAHexadecimal">Binario a Hexadecimal</option>
@@ -174,33 +173,45 @@
 							class="hexadecimalABinario p-0 m-1 text-white text-center"
 							onclick="appendNumber('F')">F</button>
 						<button style="display: none; background:#ff6e7f;"
-							class="hexadecimalABinario p-0 m-1 text-white text-center" onclick="clearDisplay()">C</button>
+							class="hexadecimalABinario p-0 m-1 text-white text-center"
+							onclick="clearDisplay()">C</button>
 						<button style="display: none; background:#ff6e7f;"
-							class="hexadecimalABinario p-0 m-1 text-white text-center " onclick="deleteLast()">←</button>
+							class="hexadecimalABinario p-0 m-1 text-white text-center "
+							onclick="deleteLast()">←</button>
 						<button style="display: none; background:#14f0a1;"
 							class=" p-0 m-1 text-white text-center col-span-2 hexadecimalABinario"
 							onclick="convert()">Convert.</button>
 
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('1')">1</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('1')">1</button>
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('2')">2</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('2')">2</button>
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('3')">3</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('3')">3</button>
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('4')">4</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('4')">4</button>
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('5')">5</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('5')">5</button>
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('6')">6</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('6')">6</button>
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('7')">7</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('7')">7</button>
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('8')">8</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('8')">8</button>
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('9')">9</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('9')">9</button>
 						<button style="display: none; background:#000;"
-							class="decimalABinario p-0 m-1 text-white text-center" onclick="appendNumber('0')">0</button>
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('0')">0</button>
 						<button style="display: none; background:#ff6e7f;"
 							class="decimalABinario p-0 m-1 text-white text-center" onclick="clearDisplay()">C</button>
 						<button style="display: none; background:#ff6e7f;"
