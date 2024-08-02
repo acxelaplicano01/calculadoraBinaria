@@ -13,7 +13,6 @@
 				justify-content: center;
 				align-items: center;
 				height: 100vh;
-				background-color: #f0f0f0;
 				font-family: Arial, sans-serif;
 			}
 
@@ -28,7 +27,7 @@
 			.calculator {
 				padding: 10px;
 				border-radius: 20px;
-				background-color: #E6E6E7;
+				background-color: #fff;
 				box-shadow: 5px 5px 5px #000;
 				border: 3px solid black;
 				padding-top: 1px;
@@ -84,10 +83,9 @@
 	<body>
 		<div class="calculator-container">
 			<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
-				<h1 class="font-medium mb-5 mt-8"></h1>
+				<a href="{{route('conversiones')}}" class="button bg-green-200">Calculadora</a>
 				<input type="text" id="display" disabled placeholder=""
 					class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
-
 				<div class="buttons grid grid-cols-4 gap-1">
 					<button style="background:#0061f8;" class=" p-0 m-1 text-black"
 						onclick="appendNumber('0')">0</button>
@@ -104,7 +102,7 @@
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
 						onclick="setOperation('/')">/</button>
 
-					<button style="background:#FF25;" class=" p-0 m-1 text-black col-span-1"
+					<button style="background:#fff;" class=" p-0 m-1 text-black col-span-1"
 						onclick="setOperation('¬')">¬</button>
 					<button style="background:#84f0a1;" class=" p-0 m-1 text-black col-span-3"
 						onclick="calculate()">=</button>
@@ -120,10 +118,6 @@
 		let firstOperand = '';
 		let secondOperand = '';
 
-		function appendNumber(number) {
-			display.value += number;
-		}
-
 		function clearDisplay() {
 			display.value = '';
 			currentOperation = '';
@@ -135,61 +129,92 @@
 			display.value = display.value.slice(0, -1);
 		}
 
+		function appendNumber(number) {
+			display.value += number;
+		}
+
 		function setOperation(operation) {
-			const display = document.getElementById('display');
-			let currentValue = display.value;
 			if (display.value === '') return;
 			if (operation === '¬') {
-				// Convertir el valor actual a un número entero
-				let number = parseInt(currentValue, 2); // Asumimos que el valor está en binario
+				let number = parseBinaryToDecimal(display.value);
 				if (isNaN(number)) {
 					display.value = 'Error';
 					return;
 				}
-
-				// Obtener la longitud del número binario original
-				let bitLength = currentValue.length;
-
-				// Aplicar la operación NOT bitwise y limitar el resultado a la longitud original
-				let complementedNumber = ~number & ((1 << bitLength) - 1);
-
-				// Convertir el resultado de nuevo a binario
-				let binaryResult = complementedNumber.toString(2);
-
-				// Mostrar el resultado en el display
+				let complementedNumber = ~number & ((1 << display.value.length) - 1);
+				let binaryResult = decimalToBinary(complementedNumber);
 				display.value = binaryResult;
 			} else {
 				firstOperand = display.value;
 				currentOperation = operation;
-				display.value = firstOperand + currentOperation;
+				display.value += operation;
 			}
-
-
 		}
 
 		function calculate() {
 			if (display.value === '' || currentOperation === '') return;
-			secondOperand = display.value;
+			let operands = display.value.split(currentOperation);
+			if (operands.length !== 2) return;
+			firstOperand = operands[0];
+			secondOperand = operands[1];
 			let result;
+			let firstNumber = parseBinaryToDecimal(firstOperand);
+			let secondNumber = parseBinaryToDecimal(secondOperand);
+
 			switch (currentOperation) {
 				case '+':
-					result = parseInt(firstOperand, 2) + parseInt(secondOperand, 2);
+					result = firstNumber + secondNumber;
 					break;
 				case '-':
-					result = parseInt(firstOperand, 2) - parseInt(secondOperand, 2);
+					result = firstNumber - secondNumber;
 					break;
 				case '*':
-					result = parseInt(firstOperand, 2) * parseInt(secondOperand, 2);
+					result = firstNumber * secondNumber;
 					break;
 				case '/':
-					result = parseInt(firstOperand, 2) / parseInt(secondOperand, 2);
+					if (secondNumber === 0) {
+						display.value = 'Error';
+						return;
+					}
+					result = firstNumber / secondNumber;
 					break;
+				default:
+					display.value = 'Error';
+					return;
 			}
-			display.value = result.toString(2);
+
+			display.value = decimalToBinary(result);
 			currentOperation = '';
 			firstOperand = '';
 			secondOperand = '';
 		}
 
+		function parseBinaryToDecimal(binary) {
+			let parts = binary.split('.');
+			let integerPart = parseInt(parts[0], 2);
+			let fractionalPart = parts[1] ? parseInt(parts[1], 2) / Math.pow(2, parts[1].length) : 0;
+			return integerPart + fractionalPart;
+		}
+
+		function decimalToBinary(decimal) {
+			let integerPart = Math.floor(decimal);
+			let fractionalPart = decimal - integerPart;
+			let binaryIntegerPart = integerPart.toString(2);
+			let binaryFractionalPart = '';
+
+			while (fractionalPart > 0) {
+				fractionalPart *= 2;
+				if (fractionalPart >= 1) {
+					binaryFractionalPart += '1';
+					fractionalPart -= 1;
+				} else {
+					binaryFractionalPart += '0';
+				}
+				// Limitar la longitud de la parte fraccionaria para evitar bucles infinitos
+				if (binaryFractionalPart.length > 10) break;
+			}
+
+			return binaryFractionalPart ? binaryIntegerPart + '.' + binaryFractionalPart : binaryIntegerPart;
+		}
 	</script>
 </x-app-layout>

@@ -1,6 +1,4 @@
 <?php
-
-use App\Livewire\Conversiones;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Conversiones as CalConversiones;
 
