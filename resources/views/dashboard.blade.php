@@ -20,7 +20,7 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				height: 80vh;
+				height: 50vh;
 				/* Para centrar verticalmente */
 			}
 
@@ -73,7 +73,17 @@
 				box-shadow: 3px 2px #666;
 			}
 
-			
+			#resultado {
+				margin-top: 90px;
+				padding: 10px;
+				background-color: #e9ecef;
+				border: 1px solid #ced4da;
+				border-radius: 4px;
+				font-size: 2.2em;
+				color: #495057;
+				text-align: right;
+				white-space: pre;
+			}
 		</style>
 	</head>
 
@@ -106,6 +116,7 @@
 				</div>
 			</div>
 		</div>
+		<p id="resultado"></p>
 	</body>
 
 	</html>
@@ -120,6 +131,7 @@
 			currentOperation = '';
 			firstOperand = '';
 			secondOperand = '';
+			document.getElementById('resultado').textContent = '';
 		}
 
 		function deleteLast() {
@@ -149,6 +161,7 @@
 		}
 
 		function calculate() {
+			const resultadoElement = document.getElementById('resultado');
 			if (display.value === '' || currentOperation === '') return;
 			let operands = display.value.split(currentOperation);
 			if (operands.length !== 2) return;
@@ -158,28 +171,33 @@
 			let firstNumber = parseBinaryToDecimal(firstOperand);
 			let secondNumber = parseBinaryToDecimal(secondOperand);
 
+			if (isNaN(firstOperand) || isNaN(secondOperand)) {
+				resultadoElement.textContent = 'Por favor, ingrese números válidos.';
+				return;
+			}
+
 			switch (currentOperation) {
 				case '+':
-					result = firstNumber + secondNumber;
+					result = parseFloat(firstNumber) + parseFloat(secondNumber);
 					break;
 				case '-':
-					result = firstNumber - secondNumber;
+					result = parseFloat(firstNumber) - parseFloat(secondNumber);
 					break;
 				case '*':
-					result = firstNumber * secondNumber;
+					result = parseFloat(firstNumber) * parseFloat(secondNumber);
 					break;
 				case '/':
-					if (secondNumber === 0) {
+					if (parseFloat(secondNumber) === 0) {
 						display.value = 'Error';
 						return;
 					}
-					result = firstNumber / secondNumber;
+					result = parseFloat(firstNumber) / parseFloat(secondNumber);
 					break;
 				default:
-					display.value = 'Error';
+					display.value = 'Operador no válido. Use +, -, * o /.'
 					return;
 			}
-
+			resultadoElement.innerHTML = `${firstOperand}\n    ${currentOperation}      ${secondOperand}<ul><li><ul class="border-t border-gray-200 dark:border-gray-700"></li></ul>${decimalToBinary(result)}`;
 			display.value = decimalToBinary(result);
 			currentOperation = '';
 			firstOperand = '';
