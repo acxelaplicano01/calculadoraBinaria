@@ -99,7 +99,7 @@
 		<body>
 			<div class="calculator-container">
 				<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
-					<a href="{{route('dashboard')}}" class="bg-green-200 button">Conversiones</a>
+					<a href="{{route('dashboard')}}" class="bg-red-200 button">Conversiones</a>
 					<input type="text" id="display" disabled placeholder=""
 						class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 					<select id="conversion" class="w-full mt-2">
@@ -272,7 +272,7 @@
 			}
 
 			function decimalABinario(decimal) {
-				return decimal.toString(2);
+				return parseInt(decimal).toString(2);
 			}
 
 			function hexadecimalABinario(hexadecimal) {
@@ -288,22 +288,22 @@
 
 				switch (conversion) {
 					case 'binarioADecimal':
-						convertedValue = binarioADecimal(inputValue);
+						convertedValue = binarioADecimal(inputValue)+ '₁₀';
 						break;
 					case 'binarioAOctal':
-						convertedValue = binarioAOctal(inputValue);
+						convertedValue = binarioAOctal(inputValue)+ '₈';
 						break;
 					case 'binarioAHexadecimal':
-						convertedValue = binarioAHexadecimal(inputValue);
+						convertedValue = binarioAHexadecimal(inputValue) + '₁₆';
 						break;
 					case 'octalABinario':
-						convertedValue = octalABinario(inputValue);
+						convertedValue = octalABinario(inputValue)+ '₂';
 						break;
 					case 'decimalABinario':
-						convertedValue = decimalABinario(inputValue);
+						convertedValue = decimalABinario(inputValue) + '₂';
 						break;
 					case 'hexadecimalABinario':
-						convertedValue = hexadecimalABinario(inputValue);
+						convertedValue = hexadecimalABinario(inputValue)+ '₂';
 						break;
 					default:
 						convertedValue = 'Seleccione una conversión válida';
