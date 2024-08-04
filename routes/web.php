@@ -1,19 +1,15 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Conversiones as CalConversiones;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::get('/calculator', function () {
+    return view('livewire.calculator');
+});
 
-    Route::get('/conversiones', CalConversiones::class)->name('conversiones');
+Route::get('/converter', function () {
+    return view('livewire.converter'); // Vista que cargará el componente Livewire
 });
