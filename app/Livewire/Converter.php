@@ -63,7 +63,7 @@ class Converter extends Component
         return $decimal;
     }
 
-    
+   
     public function render()
     {
         return view('livewire.converter');

@@ -11,5 +11,6 @@ Route::get('/calculator', function () {
 });
 
 Route::get('/converter', function () {
-    return view('livewire.converter'); // Vista que cargará el componente Livewire
+    return view('livewire.converter'); 
 });
+

@@ -15,16 +15,15 @@
     </style>
 </head>
 <body>
-    <!-- Barra de menú -->
-    <nav class="bg-blue-500 text-white p-4 fixed top-0 w-full z-10">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-xl font-bold">Calculadora Boole</a>
+   <!-- Barra de menú -->
+   <nav class="bg-blue-500 text-white p-4 fixed top-0 w-full z-10">       
+            
             <div>
+                <a href="/" class="text-xl font-bold">Calculadora Boole</a>
                 <a href="/" class="px-4 py-2 hover:bg-blue-700 rounded">Inicio</a>
                 <a href="/calculator" class="px-4 py-2 hover:bg-blue-700 rounded">Calculadora</a>
                 <a href="/converter" class="px-4 py-2 hover:bg-blue-700 rounded">Convertir</a>
-            </div>
-        </div>
+            </div>     
     </nav>
 
     <!-- Contenido principal -->
