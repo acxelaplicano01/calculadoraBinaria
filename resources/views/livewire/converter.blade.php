@@ -42,18 +42,28 @@
 </head>
 <body>
    
-    <!-- Barra de menú -->
-    <nav class="bg-blue-500 text-white p-4 fixed top-0 w-full z-10">       
+   <!-- Barra de menú -->
+   <nav class="bg-blue-500 text-white p-4 fixed top-0 w-full z-10">       
             
             <div>
                 <a href="/" class="text-xl font-bold">Calculadora Boole</a>
                 <a href="/" class="px-4 py-2 hover:bg-blue-700 rounded">Inicio</a>
-                <a href="/calculator" class="px-4 py-2 hover:bg-blue-700 rounded">Calculadora</a>
-                <a href="/converter" class="px-4 py-2 hover:bg-blue-700 rounded">Convertir</a>
+                <a href="/calculator" class="px-4 py-2 hover:bg-blue-700 rounded">Operaciones</a>
+                <a href="/converter" class="px-4 py-2 hover:bg-blue-700 rounded">Conversiones</a>
             </div>     
     </nav>
 
     <br>
+
+    <div class="text-center my-10">
+        <h1 class="text-2xl font-bold text-gray-900">
+            Conversor de Sistemas Numéricos
+        </h1>
+        <p class="mt-2 text-lg text-gray-700">
+            Puedes realizar conversiones entre los sistemas numéricos: Binarios, decimales, hexadecimales y octales. 
+        </p>
+    </div>
+
     <div class="container mx-auto mt-20">
         <div class="mb-4">
             <label for="from-base-select" class="block text-sm font-medium text-gray-900">Base de origen</label>
