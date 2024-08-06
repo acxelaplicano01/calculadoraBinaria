@@ -90,7 +90,7 @@
 	<body>
 		<div class="calculator-container">
 			<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
-				<a href="{{route('conversiones')}}" class="button bg-red-200">Calculadora</a>
+				<a href="{{route('conversiones')}}" class="button rounded-- bg-red-200">Calculadora</a>
 				<input type="text" id="display" disabled placeholder=""
 					class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 				<div class="buttons grid grid-cols-4 gap-1">
@@ -98,8 +98,12 @@
 						onclick="appendNumber('0')">0</button>
 					<button style="background: black;" class=" p-0 m-1 text-white "
 						onclick="appendNumber('1')">1</button>
-					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="clearDisplay()">C</button>
-					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="deleteLast()">←</button>
+						<button style="background: black;" class=" p-0 m-1 text-white "
+						onclick="appendNumber('.')">.</button>
+
+					<button style="background:#000;" class=" p-0 m-1 text-white col-span-1"
+						onclick="setOperation('¬')">¬</button>
+					
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
 						onclick="setOperation('+')">+</button>
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
@@ -108,10 +112,10 @@
 						onclick="setOperation('*')">*</button>
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
 						onclick="setOperation('/')">/</button>
-
-					<button style="background:#fff;" class=" p-0 m-1 text-black col-span-1"
-						onclick="setOperation('¬')">¬</button>
-					<button style="background:#84f0a1;" class=" p-0 m-1 text-black col-span-3"
+						<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="clearDisplay()">C</button>
+						<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="deleteLast()">←</button>
+					
+					<button style="background:#84f0a1;" class=" p-0 m-1 text-black col-span-2"
 						onclick="calculate()">=</button>
 				</div>
 			</div>
@@ -197,39 +201,41 @@
 					display.value = 'Operador no válido. Use +, -, * o /.'
 					return;
 			}
-			resultadoElement.innerHTML = `${firstOperand}\n    ${currentOperation}                  ${secondOperand}<ul><li><ul class="border-t border-gray-200 dark:border-gray-700"></li></ul>${decimalToBinary(result)}`;
-			display.value = decimalToBinary(result);
+			resultadoElement.innerHTML = `${firstOperand}\n    ${currentOperation}                  ${secondOperand}<ul><li><ul class="border-t border-gray-800 dark:border-gray-700"></li></ul>${decimalToBinary(result)}₂`;
+			display.value = decimalToBinary(result)+ '₂';
 			currentOperation = '';
 			firstOperand = '';
 			secondOperand = '';
 		}
-
 		function parseBinaryToDecimal(binary) {
-			let parts = binary.split('.');
-			let integerPart = parseInt(parts[0], 2);
-			let fractionalPart = parts[1] ? parseInt(parts[1], 2) / Math.pow(2, parts[1].length) : 0;
-			return integerPart + fractionalPart;
-		}
+        let parts = binary.split('.');
+        let integerPart = parseInt(parts[0], 2);
+        let fractionalPart = parts[1] ? parseInt(parts[1], 2) / Math.pow(2, parts[1].length) : 0;
+        return integerPart + fractionalPart;
+    }
 
-		function decimalToBinary(decimal) {
-			let integerPart = Math.floor(decimal);
-			let fractionalPart = decimal - integerPart;
-			let binaryIntegerPart = integerPart.toString(2);
-			let binaryFractionalPart = '';
+    function decimalToBinary(decimal) {
+        let integerPart = Math.floor(decimal);
+        let fractionalPart = decimal - integerPart;
+        let binaryIntegerPart = integerPart.toString(2);
+        let binaryFractionalPart = '';
 
-			while (fractionalPart > 0) {
-				fractionalPart *= 2;
-				if (fractionalPart >= 1) {
-					binaryFractionalPart += '1';
-					fractionalPart -= 1;
-				} else {
-					binaryFractionalPart += '0';
-				}
-				// Limitar la longitud de la parte fraccionaria para evitar bucles infinitos
-				if (binaryFractionalPart.length > 10) break;
-			}
+        if (fractionalPart > 0) {
+            binaryFractionalPart = '.';
+            let count = 0;
+            while (fractionalPart > 0 && count < 5) { // Limitar a 10 dígitos fraccionarios
+                fractionalPart *= 2;
+                if (fractionalPart >= 1) {
+                    binaryFractionalPart += '1';
+                    fractionalPart -= 1;
+                } else {
+                    binaryFractionalPart += '0';
+                }
+                count++;
+            }
+        }
 
-			return binaryFractionalPart ? binaryIntegerPart + '.' + binaryFractionalPart : binaryIntegerPart;
-		}
+        return binaryIntegerPart + binaryFractionalPart;
+    }
 	</script>
 </x-app-layout>
