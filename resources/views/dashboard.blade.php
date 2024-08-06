@@ -63,6 +63,11 @@
 				grid-template-columns: repeat(4, 1fr);
 			}
 
+			.respuestas{
+				display: grid;
+				grid-template-columns: repeat(2, 2fr);
+			}
+
 			button {
 				cursor: pointer;
 				border-radius: 10px;
@@ -84,13 +89,26 @@
 				text-align: right;
 				white-space: pre;
 			}
+
+			#resultadoDecimal{
+				margin-left: 5px;
+				margin-top: 90px;
+				padding: 10px;
+				background-color: #e9ecef;
+				border: 1px solid #ced4da;
+				border-radius: 4px;
+				font-size: 2.2em;
+				color: #495057;
+				text-align: right;
+				white-space: pre;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div class="calculator-container">
 			<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
-				<a href="{{route('conversiones')}}" class="button rounded-- bg-red-200">Calculadora</a>
+				<a href="{{route('conversiones')}}" class="button bg-red-200">Calculadora</a>
 				<input type="text" id="display" disabled placeholder=""
 					class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 				<div class="buttons grid grid-cols-4 gap-1">
@@ -120,7 +138,10 @@
 				</div>
 			</div>
 		</div>
+		<div class="respuestas">
 		<p id="resultado"></p>
+		<p id="resultadoDecimal"></p>
+		</div>
 	</body>
 
 	</html>
@@ -166,6 +187,7 @@
 
 		function calculate() {
 			const resultadoElement = document.getElementById('resultado');
+			const resultadoDecimalElement = document.getElementById('resultadoDecimal');
 			if (display.value === '' || currentOperation === '') return;
 			let operands = display.value.split(currentOperation);
 			if (operands.length !== 2) return;
@@ -201,7 +223,8 @@
 					display.value = 'Operador no válido. Use +, -, * o /.'
 					return;
 			}
-			resultadoElement.innerHTML = `${firstOperand}\n    ${currentOperation}                  ${secondOperand}<ul><li><ul class="border-t border-gray-800 dark:border-gray-700"></li></ul>${decimalToBinary(result)}₂`;
+			resultadoDecimalElement.innerHTML =  `<p style="font-size: 30px;">En decimal:</p>${parseBinaryToDecimal(firstOperand)}\n    ${currentOperation}                  ${parseBinaryToDecimal(secondOperand)}<ul><li><ul class="border-t border-gray-800 dark:border-gray-700"></li></ul>${result}₁₀`;
+			resultadoElement.innerHTML = `<p style="font-size: 30px;">En binario:</p>${firstOperand}\n    ${currentOperation}                  ${secondOperand}<ul><li><ul class="border-t border-gray-800 dark:border-gray-700"></li></ul>${decimalToBinary(result)}₂`;
 			display.value = decimalToBinary(result)+ '₂';
 			currentOperation = '';
 			firstOperand = '';
