@@ -22,7 +22,7 @@
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					height: 80vh;
+					height: 60vh;
 					/* Para centrar verticalmente */
 				}
 
@@ -93,6 +93,18 @@
 				button:hover {
 					color: #fff;
 				}
+
+				#resultado {
+				margin-top: 170px;
+				padding: 10px;
+				background-color: #e9ecef;
+				border: 1px solid #ced4da;
+				border-radius: 4px;
+				font-size: 2.2em;
+				color: #495057;
+				text-align: right;
+				white-space: pre;
+			}
 			</style>
 		</head>
 
@@ -247,6 +259,7 @@
 					</div>
 				</div>
 			</div>
+			<p id="resultado"></p>
 		</body>
 
 		</html>
@@ -282,6 +295,7 @@
 
 			// Función para manejar la conversión
 			function convert() {
+				const resultadoElement = document.getElementById('resultado');
 				const conversion = document.getElementById('conversion').value;
 				const inputValue = document.getElementById('display').value;
 				let convertedValue;
@@ -289,26 +303,32 @@
 				switch (conversion) {
 					case 'binarioADecimal':
 						convertedValue = binarioADecimal(inputValue)+ '₁₀';
+						inputSubscript = '₂';
 						break;
 					case 'binarioAOctal':
 						convertedValue = binarioAOctal(inputValue)+ '₈';
+						inputSubscript = '₂';
 						break;
 					case 'binarioAHexadecimal':
 						convertedValue = binarioAHexadecimal(inputValue) + '₁₆';
+						inputSubscript = '₂';
 						break;
 					case 'octalABinario':
 						convertedValue = octalABinario(inputValue)+ '₂';
+						inputSubscript = '₈';
 						break;
 					case 'decimalABinario':
 						convertedValue = decimalABinario(inputValue) + '₂';
+						inputSubscript = '₁₀';
 						break;
 					case 'hexadecimalABinario':
 						convertedValue = hexadecimalABinario(inputValue)+ '₂';
+						inputSubscript = '₁₆';
 						break;
 					default:
 						convertedValue = 'Seleccione una conversión válida';
 				}
-
+				resultadoElement.innerHTML = `${inputValue}${inputSubscript} = ${convertedValue}`;
 				display.value = convertedValue
 			}
 
@@ -363,6 +383,7 @@
 				currentOperation = '';
 				firstOperand = '';
 				secondOperand = '';
+				document.getElementById('resultado').textContent = '';
 			}
 
 			function deleteLast() {
