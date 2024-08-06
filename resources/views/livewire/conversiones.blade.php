@@ -121,6 +121,8 @@
 						<option value="octalABinario">Octal a Binario</option>
 						<option value="decimalABinario" selected>Decimal a Binario</option>
 						<option value="hexadecimalABinario">Hexadecimal a Binario</option>
+						<option value="decimalAHexadecimal">Decimal a Hexadecimal</option>
+						<option value="hexadecimalADecimal">Hexadecimal a Decimal</option>
 					</select>
 					<div class="buttons grid grid-cols-4 gap-1">
 
@@ -394,6 +396,13 @@
 				return hexIntegerPart + hexFractionalPart;
 			}
 
+			function hexadecimalToDecimal(hexadecimal) {
+				let parts = hexadecimal.split('.');
+				let integerPart = parseInt(parts[0], 16);
+				let fractionalPart = parts[1] ? convertHexFractionalToDecimal(parts[1]) : 0;
+				return integerPart + fractionalPart;
+			}
+
 			// Función para manejar la conversión
 			function convert() {
 				const resultadoElement = document.getElementById('resultado');
@@ -426,6 +435,14 @@
 						convertedValue = hexadecimalABinario(inputValue) + '₂';
 						inputSubscript = '₁₆';
 						break;
+					case 'decimalAHexadecimal':
+						convertedValue = decimalToHexadecimal(inputValue) + '₁₆';
+						inputSubscript = '₁₀';
+						break;
+					case 'hexadecimalADecimal':
+						convertedValue = hexadecimalToDecimal(inputValue) + '₁₀';
+						inputSubscript = '₁₆';
+						break;
 					default:
 						convertedValue = 'Seleccione una conversión válida';
 				}
@@ -452,9 +469,9 @@
 					binario.forEach(field => field.style.display = 'none');
 
 					// Mostrar los botones correspondientes a la opción seleccionada
-					if (value === 'decimalABinario') {
+					if (value === 'decimalABinario' || value === 'decimalAHexadecimal') {
 						decimal.forEach(field => field.style.display = 'flex');
-					} else if (value === 'hexadecimalABinario') {
+					} else if (value === 'hexadecimalABinario' || value === 'hexadecimalADecimal') {
 						hexadecimal.forEach(field => field.style.display = 'flex');
 					} else if (value === 'octalABinario') {
 						octal.forEach(field => field.style.display = 'flex');
