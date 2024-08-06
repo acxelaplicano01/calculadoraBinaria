@@ -197,7 +197,7 @@
 					display.value = 'Operador no válido. Use +, -, * o /.'
 					return;
 			}
-			resultadoElement.innerHTML = `${firstOperand}\n    ${currentOperation}      ${secondOperand}<ul><li><ul class="border-t border-gray-200 dark:border-gray-700"></li></ul>${decimalToBinary(result)}`;
+			resultadoElement.innerHTML = `${firstOperand}\n    ${currentOperation}                  ${secondOperand}<ul><li><ul class="border-t border-gray-200 dark:border-gray-700"></li></ul>${decimalToBinary(result)}`;
 			display.value = decimalToBinary(result);
 			currentOperation = '';
 			firstOperand = '';
