@@ -307,7 +307,7 @@
 				if (fractionalPart > 0) {
 					binaryFractionalPart = '.';
 					let count = 0;
-					while (fractionalPart > 0 && count < 10) { // Limitar a 10 dígitos fraccionarios
+					while (fractionalPart > 0 && count < 9) { // Limitar a 10 dígitos fraccionarios
 						fractionalPart *= 2;
 						if (fractionalPart >= 1) {
 							binaryFractionalPart += '1';
@@ -338,7 +338,7 @@
 				}
 
 				let count = 0;
-				while (decimalValue > 0 && count < 10) { // Limitar a 10 dígitos fraccionarios
+				while (decimalValue > 0 && count < 9) { // Limitar a 10 dígitos fraccionarios
 					decimalValue *= 2;
 					if (decimalValue >= 1) {
 						binaryFractionalPart += '1';
@@ -361,7 +361,7 @@
 				if (fractionalPart > 0) {
 					octalFractionalPart = '.';
 					let count = 0;
-					while (fractionalPart > 0 && count < 10) { // Limitar a 10 dígitos fraccionarios
+					while (fractionalPart > 0 && count < 9) { // Limitar a 10 dígitos fraccionarios
 						fractionalPart *= 8;
 						let digit = Math.floor(fractionalPart);
 						octalFractionalPart += digit.toString(8);
@@ -382,7 +382,7 @@
 				if (fractionalPart > 0) {
 					hexFractionalPart = '.';
 					let count = 0;
-					while (fractionalPart > 0 && count < 10) { // Limitar a 10 dígitos fraccionarios
+					while (fractionalPart > 0 && count < 9) { // Limitar a 10 dígitos fraccionarios
 						fractionalPart *= 16;
 						let digit = Math.floor(fractionalPart);
 						hexFractionalPart += digit.toString(16).toUpperCase();
@@ -573,7 +573,7 @@
 						binaryFractionalPart += '0';
 					}
 					// Limitar la longitud de la parte fraccionaria para evitar bucles infinitos
-					if (binaryFractionalPart.length > 10) break;
+					if (binaryFractionalPart.length > 9) break;
 				}
 
 				return binaryFractionalPart ? binaryIntegerPart + '.' + binaryFractionalPart : binaryIntegerPart;
