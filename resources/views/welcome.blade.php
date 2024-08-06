@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - BooleanCalc</title>
+    <title>Inicio - Calculadora Booleana</title>
     <!-- Flowbite CSS CDN -->
     <link href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
