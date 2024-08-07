@@ -105,6 +105,11 @@
 					text-align: right;
 					white-space: pre;
 				}
+
+				a {
+					padding: 2px;
+					border-radius: 5px;
+				}
 			</style>
 		</head>
 

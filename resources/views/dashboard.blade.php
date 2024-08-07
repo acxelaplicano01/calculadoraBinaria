@@ -63,7 +63,7 @@
 				grid-template-columns: repeat(4, 1fr);
 			}
 
-			.respuestas{
+			.respuestas {
 				display: grid;
 				grid-template-columns: repeat(2, 2fr);
 			}
@@ -90,7 +90,7 @@
 				white-space: pre;
 			}
 
-			#resultadoDecimal{
+			#resultadoDecimal {
 				margin-left: 5px;
 				margin-top: 90px;
 				padding: 10px;
@@ -101,6 +101,11 @@
 				color: #495057;
 				text-align: right;
 				white-space: pre;
+			}
+
+			a {
+				padding: 2px;
+				border-radius: 5px;
 			}
 		</style>
 	</head>
@@ -116,12 +121,12 @@
 						onclick="appendNumber('0')">0</button>
 					<button style="background: black;" class=" p-0 m-1 text-white "
 						onclick="appendNumber('1')">1</button>
-						<button style="background: black;" class=" p-0 m-1 text-white "
+					<button style="background: black;" class=" p-0 m-1 text-white "
 						onclick="appendNumber('.')">.</button>
 
 					<button style="background:#000;" class=" p-0 m-1 text-white col-span-1"
 						onclick="setOperation('¬')">¬</button>
-					
+
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
 						onclick="setOperation('+')">+</button>
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
@@ -130,17 +135,17 @@
 						onclick="setOperation('*')">*</button>
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
 						onclick="setOperation('/')">/</button>
-						<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="clearDisplay()">C</button>
-						<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="deleteLast()">←</button>
-					
+					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="clearDisplay()">C</button>
+					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="deleteLast()">←</button>
+
 					<button style="background:#84f0a1;" class=" p-0 m-1 text-black col-span-2"
 						onclick="calculate()">=</button>
 				</div>
 			</div>
 		</div>
 		<div class="respuestas">
-		<p id="resultado"></p>
-		<p id="resultadoDecimal"></p>
+			<p id="resultado"></p>
+			<p id="resultadoDecimal"></p>
 		</div>
 	</body>
 
@@ -157,6 +162,7 @@
 			firstOperand = '';
 			secondOperand = '';
 			document.getElementById('resultado').textContent = '';
+			document.getElementById('resultadoDecimal').textContent = '';
 		}
 
 		function deleteLast() {
@@ -223,42 +229,42 @@
 					display.value = 'Operador no válido. Use +, -, * o /.'
 					return;
 			}
-			resultadoDecimalElement.innerHTML =  `<p style="font-size: 30px;">En decimal:</p>${parseBinaryToDecimal(firstOperand)}\n    ${currentOperation}                  ${parseBinaryToDecimal(secondOperand)}<ul><li><ul class="border-t border-gray-800 dark:border-gray-700"></li></ul>${result}₁₀`;
+			resultadoDecimalElement.innerHTML = `<p style="font-size: 30px;">En decimal:</p>${parseBinaryToDecimal(firstOperand)}\n    ${currentOperation}                  ${parseBinaryToDecimal(secondOperand)}<ul><li><ul class="border-t border-gray-800 dark:border-gray-700"></li></ul>${result}₁₀`;
 			resultadoElement.innerHTML = `<p style="font-size: 30px;">En binario:</p>${firstOperand}\n    ${currentOperation}                  ${secondOperand}<ul><li><ul class="border-t border-gray-800 dark:border-gray-700"></li></ul>${decimalToBinary(result)}₂`;
-			display.value = decimalToBinary(result)+ '₂';
+			display.value = decimalToBinary(result) + '₂';
 			currentOperation = '';
 			firstOperand = '';
 			secondOperand = '';
 		}
 		function parseBinaryToDecimal(binary) {
-        let parts = binary.split('.');
-        let integerPart = parseInt(parts[0], 2);
-        let fractionalPart = parts[1] ? parseInt(parts[1], 2) / Math.pow(2, parts[1].length) : 0;
-        return integerPart + fractionalPart;
-    }
+			let parts = binary.split('.');
+			let integerPart = parseInt(parts[0], 2);
+			let fractionalPart = parts[1] ? parseInt(parts[1], 2) / Math.pow(2, parts[1].length) : 0;
+			return integerPart + fractionalPart;
+		}
 
-    function decimalToBinary(decimal) {
-        let integerPart = Math.floor(decimal);
-        let fractionalPart = decimal - integerPart;
-        let binaryIntegerPart = integerPart.toString(2);
-        let binaryFractionalPart = '';
+		function decimalToBinary(decimal) {
+			let integerPart = Math.floor(decimal);
+			let fractionalPart = decimal - integerPart;
+			let binaryIntegerPart = integerPart.toString(2);
+			let binaryFractionalPart = '';
 
-        if (fractionalPart > 0) {
-            binaryFractionalPart = '.';
-            let count = 0;
-            while (fractionalPart > 0 && count < 5) { // Limitar a 10 dígitos fraccionarios
-                fractionalPart *= 2;
-                if (fractionalPart >= 1) {
-                    binaryFractionalPart += '1';
-                    fractionalPart -= 1;
-                } else {
-                    binaryFractionalPart += '0';
-                }
-                count++;
-            }
-        }
+			if (fractionalPart > 0) {
+				binaryFractionalPart = '.';
+				let count = 0;
+				while (fractionalPart > 0 && count < 5) { // Limitar a 10 dígitos fraccionarios
+					fractionalPart *= 2;
+					if (fractionalPart >= 1) {
+						binaryFractionalPart += '1';
+						fractionalPart -= 1;
+					} else {
+						binaryFractionalPart += '0';
+					}
+					count++;
+				}
+			}
 
-        return binaryIntegerPart + binaryFractionalPart;
-    }
+			return binaryIntegerPart + binaryFractionalPart;
+		}
 	</script>
 </x-app-layout>
