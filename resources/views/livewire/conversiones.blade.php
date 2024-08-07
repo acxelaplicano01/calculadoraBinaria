@@ -110,10 +110,28 @@
 					padding: 2px;
 					border-radius: 5px;
 				}
+
+				.top-right {
+					position: absolute;
+					top: 2px;
+					right: 50px;
+					background-color: #ced4da;
+					color: #000;
+				}
+
+				.top-left {
+					position: absolute;
+					top: 2px;
+					left: -275px;
+					background-color: #ced4da;
+					color: #000;
+				}
 			</style>
 		</head>
 
 		<body>
+			<button class="bg-black mt-5 top-right"><a href="{{route("dashboard")}}">Calculadora</a></button>
+			<button class="bg-black mt-5 ml-80 top-left"><a href="/">Inicio</a></button>
 			<div class="calculator-container">
 				<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
 					<a href="{{route('dashboard')}}" class="bg-red-200 button">Conversiones</a>
