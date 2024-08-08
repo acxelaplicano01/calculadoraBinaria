@@ -130,7 +130,7 @@
 		<button class="bg-black mt-5 ml-80 top-left"><a href="/">Inicio</a></button>
 		<div class="calculator-container">
 			<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
-				<a href="{{route('conversiones')}}" class="button bg-red-200">Calculadora</a>
+				<a href="{{route('dashboard')}}" class="button bg-red-200">Calculadora</a>
 				<input type="text" id="display" disabled placeholder=""
 					class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 				<div class="buttons grid grid-cols-4 gap-1">

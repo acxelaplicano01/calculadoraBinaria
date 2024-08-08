@@ -134,7 +134,7 @@
 			<button class="bg-black mt-5 ml-80 top-left"><a href="/">Inicio</a></button>
 			<div class="calculator-container">
 				<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
-					<a href="{{route('dashboard')}}" class="bg-red-200 button">Conversiones</a>
+					<a href="{{route('conversiones')}}" class="bg-red-200 button">Conversiones</a>
 					<input type="text" id="display" disabled placeholder=""
 						class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 					<select id="conversion" class="w-full mt-2">
