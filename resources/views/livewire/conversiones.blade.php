@@ -95,23 +95,46 @@
 				}
 
 				#resultado {
-				margin-top: 170px;
-				padding: 10px;
-				background-color: #e9ecef;
-				border: 1px solid #ced4da;
-				border-radius: 4px;
-				font-size: 2.2em;
-				color: #495057;
-				text-align: right;
-				white-space: pre;
-			}
+					margin-top: 170px;
+					padding: 10px;
+					background-color: #e9ecef;
+					border: 1px solid #ced4da;
+					border-radius: 4px;
+					font-size: 2.2em;
+					color: #495057;
+					text-align: right;
+					white-space: pre;
+				}
+
+				a {
+					padding: 2px;
+					border-radius: 5px;
+				}
+
+				.top-right {
+					position: absolute;
+					top: 2px;
+					right: 50px;
+					background-color: #ced4da;
+					color: #000;
+				}
+
+				.top-left {
+					position: absolute;
+					top: 2px;
+					left: -275px;
+					background-color: #ced4da;
+					color: #000;
+				}
 			</style>
 		</head>
 
 		<body>
+			<button class="bg-black mt-5 top-right"><a href="{{route("dashboard")}}">Calculadora</a></button>
+			<button class="bg-black mt-5 ml-80 top-left"><a href="/">Inicio</a></button>
 			<div class="calculator-container">
 				<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
-					<a href="{{route('dashboard')}}" class="bg-red-200 button">Conversiones</a>
+					<a href="{{route('conversiones')}}" class="bg-red-200 button">Conversiones</a>
 					<input type="text" id="display" disabled placeholder=""
 						class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 					<select id="conversion" class="w-full mt-2">
@@ -121,6 +144,8 @@
 						<option value="octalABinario">Octal a Binario</option>
 						<option value="decimalABinario" selected>Decimal a Binario</option>
 						<option value="hexadecimalABinario">Hexadecimal a Binario</option>
+						<option value="decimalAHexadecimal">Decimal a Hexadecimal</option>
+						<option value="hexadecimalADecimal">Hexadecimal a Decimal</option>
 					</select>
 					<div class="buttons grid grid-cols-4 gap-1">
 
@@ -128,12 +153,14 @@
 							class="btnsBinario p-0 m-1 text-white text-center" onclick="appendNumber('0')">0</button>
 						<button style="display: none; background:black;"
 							class="btnsBinario p-0 m-1 text-white text-center " onclick="appendNumber('1')">1</button>
+						<button style="display: none; background:black;"
+							class="btnsBinario p-0 m-1 text-white text-center " onclick="appendNumber('.')">.</button>
 						<button style="display: none; background:#ff6e7f;"
 							class="btnsBinario p-0 m-1 text-white text-center " onclick="clearDisplay()">C</button>
 						<button style="display: none; background:#ff6e7f;"
 							class="btnsBinario p-0 m-1 text-white text-center " onclick="deleteLast()">←</button>
 						<button style="display: none; background:#14f0a1;"
-							class="btnsBinario p-0 m-1 text-white text-center col-span-4"
+							class="btnsBinario p-0 m-1 text-white text-center col-span-3"
 							onclick="convert()">Convertir</button>
 
 						<button style="display: none; background:#000;"
@@ -184,15 +211,18 @@
 						<button style="display: none; background:#000;"
 							class="hexadecimalABinario p-0 m-1 text-white text-center"
 							onclick="appendNumber('F')">F</button>
+						<button style="display: none; background:black;"
+							class="hexadecimalABinario p-0 m-1 text-white text-center "
+							onclick="appendNumber('.')">.</button>
 						<button style="display: none; background:#ff6e7f;"
 							class="hexadecimalABinario p-0 m-1 text-white text-center"
 							onclick="clearDisplay()">C</button>
 						<button style="display: none; background:#ff6e7f;"
-							class="hexadecimalABinario p-0 m-1 text-white text-center "
+							class="hexadecimalABinario p-0 m-1 text-white text-center col-span-2 "
 							onclick="deleteLast()">←</button>
 						<button style="display: none; background:#14f0a1;"
-							class=" p-0 m-1 text-white text-center col-span-2 hexadecimalABinario"
-							onclick="convert()">Convert.</button>
+							class=" p-0 m-1 text-white text-center col-span-4 hexadecimalABinario"
+							onclick="convert()">Convertir</button>
 
 						<button style="display: none; background:#000;"
 							class="decimalABinario p-0 m-1 text-white text-center"
@@ -228,8 +258,11 @@
 							class="decimalABinario p-0 m-1 text-white text-center" onclick="clearDisplay()">C</button>
 						<button style="display: none; background:#ff6e7f;"
 							class="decimalABinario p-0 m-1 text-white text-center" onclick="deleteLast()">←</button>
+						<button style="display: none; background:#000;"
+							class="decimalABinario p-0 m-1 text-white text-center"
+							onclick="appendNumber('.')">.</button>
 						<button style="display: none; background:#14f0a1;"
-							class="decimalABinario p-0 m-1 text-white text-center col-span-4"
+							class="decimalABinario p-0 m-1 text-white text-center col-span-3"
 							onclick="convert()">Convertir</button>
 
 
@@ -249,13 +282,16 @@
 							class="octalABinario p-0 m-1 text-white text-center " onclick="appendNumber('6')">6</button>
 						<button style="display: none; background:#000;"
 							class="octalABinario p-0 m-1 text-white text-center " onclick="appendNumber('7')">7</button>
+						<button style="display: none; background:#000;"
+							class="octalABinario p-0 m-1 text-white text-center " onclick="appendNumber('.')">.</button>
 						<button style="display: none; background:#ff6e7f;"
 							class="octalABinario p-0 m-1 text-white text-center " onclick="clearDisplay()">C</button>
 						<button style="display: none; background:#ff6e7f;"
-							class="octalABinario p-0 m-1 text-white text-center " onclick="deleteLast()">←</button>
+							class="octalABinario p-0 m-1 text-white text-center  col-span-2"
+							onclick="deleteLast()">←</button>
 						<button style="display: none; background:#14f0a1;"
-							class="octalABinario p-0 m-1 text-white text-center col-span-2"
-							onclick="convert()">Convert.</button>
+							class="octalABinario p-0 m-1 text-white text-center col-span-4"
+							onclick="convert()">Convertir</button>
 					</div>
 				</div>
 			</div>
@@ -266,31 +302,128 @@
 		<script>
 			// Funciones de conversión
 			function binarioADecimal(binario) {
-				return parseInt(binario, 2);
+				let parts = binario.split('.');
+				let integerPart = parseInt(parts[0], 2);
+				let fractionalPart = parts[1] ? parseInt(parts[1], 2) / Math.pow(2, parts[1].length) : 0;
+				return integerPart + fractionalPart;
 			}
 
 			function binarioAOctal(binario) {
-				const decimal = parseInt(binario, 2);
-				return decimal.toString(8);
+				let decimal = binarioADecimal(binario);
+				return decimalToOctal(decimal);
 			}
 
 			function binarioAHexadecimal(binario) {
-				const decimal = parseInt(binario, 2);
-				return decimal.toString(16).toUpperCase();
+				let decimal = binarioADecimal(binario);
+				return decimalToHexadecimal(decimal);
 			}
 
 			function octalABinario(octal) {
-				const decimal = parseInt(octal, 8);
-				return decimal.toString(2);
+				let decimal = parseInt(octal, 8);
+				return decimalToBinary(decimal);
 			}
 
 			function decimalABinario(decimal) {
-				return parseInt(decimal).toString(2);
+				let integerPart = Math.floor(decimal);
+				let fractionalPart = decimal - integerPart;
+				let binaryIntegerPart = integerPart.toString(2);
+				let binaryFractionalPart = '';
+
+				if (fractionalPart > 0) {
+					binaryFractionalPart = '.';
+					let count = 0;
+					while (fractionalPart > 0 && count < 9) { // Limitar a 10 dígitos fraccionarios
+						fractionalPart *= 2;
+						if (fractionalPart >= 1) {
+							binaryFractionalPart += '1';
+							fractionalPart -= 1;
+						} else {
+							binaryFractionalPart += '0';
+						}
+						count++;
+					}
+				}
+
+				return binaryIntegerPart + binaryFractionalPart;
 			}
 
 			function hexadecimalABinario(hexadecimal) {
-				const decimal = parseInt(hexadecimal, 16);
-				return decimal.toString(2);
+				let parts = hexadecimal.split('.');
+				let integerPart = parseInt(parts[0], 16).toString(2);
+				let fractionalPart = parts[1] ? convertHexFractionalToBinary(parts[1]) : '';
+				return fractionalPart ? integerPart + '.' + fractionalPart : integerPart;
+			}
+
+			function convertHexFractionalToBinary(fractionalPart) {
+				let binaryFractionalPart = '';
+				let decimalValue = 0;
+
+				for (let i = 0; i < fractionalPart.length; i++) {
+					decimalValue += parseInt(fractionalPart[i], 16) / Math.pow(16, i + 1);
+				}
+
+				let count = 0;
+				while (decimalValue > 0 && count < 9) { // Limitar a 10 dígitos fraccionarios
+					decimalValue *= 2;
+					if (decimalValue >= 1) {
+						binaryFractionalPart += '1';
+						decimalValue -= 1;
+					} else {
+						binaryFractionalPart += '0';
+					}
+					count++;
+				}
+
+				return binaryFractionalPart;
+			}
+
+			function decimalToOctal(decimal) {
+				let integerPart = Math.floor(decimal);
+				let fractionalPart = decimal - integerPart;
+				let octalIntegerPart = integerPart.toString(8);
+				let octalFractionalPart = '';
+
+				if (fractionalPart > 0) {
+					octalFractionalPart = '.';
+					let count = 0;
+					while (fractionalPart > 0 && count < 9) { // Limitar a 10 dígitos fraccionarios
+						fractionalPart *= 8;
+						let digit = Math.floor(fractionalPart);
+						octalFractionalPart += digit.toString(8);
+						fractionalPart -= digit;
+						count++;
+					}
+				}
+
+				return octalIntegerPart + octalFractionalPart;
+			}
+
+			function decimalToHexadecimal(decimal) {
+				let integerPart = Math.floor(decimal);
+				let fractionalPart = decimal - integerPart;
+				let hexIntegerPart = integerPart.toString(16).toUpperCase();
+				let hexFractionalPart = '';
+
+				if (fractionalPart > 0) {
+					hexFractionalPart = '.';
+					let count = 0;
+					while (fractionalPart > 0 && count < 9) { // Limitar a 10 dígitos fraccionarios
+						fractionalPart *= 16;
+						let digit = Math.floor(fractionalPart);
+						hexFractionalPart += digit.toString(16).toUpperCase();
+						fractionalPart -= digit;
+						count++;
+					}
+				}
+
+				return hexIntegerPart + hexFractionalPart;
+			}
+
+			function hexadecimalToDecimal(hexadecimal) {
+				let parts = hexadecimal.split('.');
+				let integerPart = parseInt(parts[0], 16);
+				let fractionalPart = parts[1] ? convertHexFractionalToDecimal(parts[1]) : 0;
+				return integerPart + fractionalPart;
 			}
 
 			// Función para manejar la conversión
@@ -302,11 +435,11 @@
 
 				switch (conversion) {
 					case 'binarioADecimal':
-						convertedValue = binarioADecimal(inputValue)+ '₁₀';
+						convertedValue = binarioADecimal(inputValue) + '₁₀';
 						inputSubscript = '₂';
 						break;
 					case 'binarioAOctal':
-						convertedValue = binarioAOctal(inputValue)+ '₈';
+						convertedValue = binarioAOctal(inputValue) + '₈';
 						inputSubscript = '₂';
 						break;
 					case 'binarioAHexadecimal':
@@ -314,7 +447,7 @@
 						inputSubscript = '₂';
 						break;
 					case 'octalABinario':
-						convertedValue = octalABinario(inputValue)+ '₂';
+						convertedValue = octalABinario(inputValue) + '₂';
 						inputSubscript = '₈';
 						break;
 					case 'decimalABinario':
@@ -322,7 +455,15 @@
 						inputSubscript = '₁₀';
 						break;
 					case 'hexadecimalABinario':
-						convertedValue = hexadecimalABinario(inputValue)+ '₂';
+						convertedValue = hexadecimalABinario(inputValue) + '₂';
+						inputSubscript = '₁₆';
+						break;
+					case 'decimalAHexadecimal':
+						convertedValue = decimalToHexadecimal(inputValue) + '₁₆';
+						inputSubscript = '₁₀';
+						break;
+					case 'hexadecimalADecimal':
+						convertedValue = hexadecimalToDecimal(inputValue) + '₁₀';
 						inputSubscript = '₁₆';
 						break;
 					default:
@@ -351,9 +492,9 @@
 					binario.forEach(field => field.style.display = 'none');
 
 					// Mostrar los botones correspondientes a la opción seleccionada
-					if (value === 'decimalABinario') {
+					if (value === 'decimalABinario' || value === 'decimalAHexadecimal') {
 						decimal.forEach(field => field.style.display = 'flex');
-					} else if (value === 'hexadecimalABinario') {
+					} else if (value === 'hexadecimalABinario' || value === 'hexadecimalADecimal') {
 						hexadecimal.forEach(field => field.style.display = 'flex');
 					} else if (value === 'octalABinario') {
 						octal.forEach(field => field.style.display = 'flex');
@@ -472,7 +613,7 @@
 						binaryFractionalPart += '0';
 					}
 					// Limitar la longitud de la parte fraccionaria para evitar bucles infinitos
-					if (binaryFractionalPart.length > 10) break;
+					if (binaryFractionalPart.length > 9) break;
 				}
 
 				return binaryFractionalPart ? binaryIntegerPart + '.' + binaryFractionalPart : binaryIntegerPart;

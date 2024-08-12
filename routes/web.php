@@ -6,11 +6,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/calculator', function () {
-    return view('livewire.calculator');
-});
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::get('/converter', function () {
-    return view('livewire.converter'); 
+    Route::get('/conversiones', CalConversiones::class)->name('conversiones');
 });
-

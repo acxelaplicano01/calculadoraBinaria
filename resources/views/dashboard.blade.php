@@ -63,6 +63,11 @@
 				grid-template-columns: repeat(4, 1fr);
 			}
 
+			.respuestas {
+				display: grid;
+				grid-template-columns: repeat(2, 2fr);
+			}
+
 			button {
 				cursor: pointer;
 				border-radius: 10px;
@@ -84,13 +89,48 @@
 				text-align: right;
 				white-space: pre;
 			}
+
+			#resultadoDecimal {
+				margin-left: 5px;
+				margin-top: 90px;
+				padding: 10px;
+				background-color: #e9ecef;
+				border: 1px solid #ced4da;
+				border-radius: 4px;
+				font-size: 2.2em;
+				color: #495057;
+				text-align: right;
+				white-space: pre;
+			}
+
+			a {
+				padding: 2px;
+				border-radius: 5px;
+			}
+
+			.top-right {
+				position: absolute;
+				top: 2px;
+				right: 50px;
+				background-color: #ced4da;
+			}
+
+			.top-left {
+				position: absolute;
+				top: 2px;
+				left: -275px;
+				background-color: #ced4da;
+				color: #000;
+			}
 		</style>
 	</head>
 
 	<body>
+		<button class="bg-black mt-5 top-right"><a href="{{route("conversiones")}}">Conversiones</a></button>
+		<button class="bg-black mt-5 ml-80 top-left"><a href="/">Inicio</a></button>
 		<div class="calculator-container">
 			<div class="calculator mt-40 p-4 rounded-lg shadow-lg">
-				<a href="{{route('conversiones')}}" class="button bg-red-200">Calculadora</a>
+				<a href="{{route('dashboard')}}" class="button bg-red-200">Calculadora</a>
 				<input type="text" id="display" disabled placeholder=""
 					class="w-full mb-4 p-2 text-right bg-white text-white shadow-inner rounded">
 				<div class="buttons grid grid-cols-4 gap-1">
@@ -98,8 +138,12 @@
 						onclick="appendNumber('0')">0</button>
 					<button style="background: black;" class=" p-0 m-1 text-white "
 						onclick="appendNumber('1')">1</button>
-					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="clearDisplay()">C</button>
-					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="deleteLast()">←</button>
+					<button style="background: black;" class=" p-0 m-1 text-white "
+						onclick="appendNumber('.')">.</button>
+
+					<button style="background:#000;" class=" p-0 m-1 text-white col-span-1"
+						onclick="setOperation('¬')">¬</button>
+
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
 						onclick="setOperation('+')">+</button>
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
@@ -108,15 +152,18 @@
 						onclick="setOperation('*')">*</button>
 					<button style="background:#FFEF9F;" class=" p-0 m-1 text-black "
 						onclick="setOperation('/')">/</button>
+					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="clearDisplay()">C</button>
+					<button style="background:#ff6e7f;" class=" p-0 m-1 text-black " onclick="deleteLast()">←</button>
 
-					<button style="background:#fff;" class=" p-0 m-1 text-black col-span-1"
-						onclick="setOperation('¬')">¬</button>
-					<button style="background:#84f0a1;" class=" p-0 m-1 text-black col-span-3"
+					<button style="background:#84f0a1;" class=" p-0 m-1 text-black col-span-2"
 						onclick="calculate()">=</button>
 				</div>
 			</div>
 		</div>
-		<p id="resultado"></p>
+		<div class="respuestas">
+			<p id="resultado"></p>
+			<p id="resultadoDecimal"></p>
+		</div>
 	</body>
 
 	</html>
@@ -132,6 +179,7 @@
 			firstOperand = '';
 			secondOperand = '';
 			document.getElementById('resultado').textContent = '';
+			document.getElementById('resultadoDecimal').textContent = '';
 		}
 
 		function deleteLast() {
@@ -162,6 +210,7 @@
 
 		function calculate() {
 			const resultadoElement = document.getElementById('resultado');
+			const resultadoDecimalElement = document.getElementById('resultadoDecimal');
 			if (display.value === '' || currentOperation === '') return;
 			let operands = display.value.split(currentOperation);
 			if (operands.length !== 2) return;
@@ -197,13 +246,13 @@
 					display.value = 'Operador no válido. Use +, -, * o /.'
 					return;
 			}
-			resultadoElement.innerHTML = `${firstOperand}\n    ${currentOperation}      ${secondOperand}<ul><li><ul class="border-t border-gray-200 dark:border-gray-700"></li></ul>${decimalToBinary(result)}`;
-			display.value = decimalToBinary(result);
+			resultadoDecimalElement.innerHTML = `<p style="font-size: 30px;">En decimal:</p>${parseBinaryToDecimal(firstOperand)}\n    ${currentOperation}                  ${parseBinaryToDecimal(secondOperand)}<ul><li><ul class="border-t border-gray-800 dark:border-gray-700"></li></ul>${result}₁₀`;
+			resultadoElement.innerHTML = `<p style="font-size: 30px;">En binario:</p>${firstOperand}\n    ${currentOperation}                  ${secondOperand}<ul><li><ul class="border-t border-gray-800 dark:border-gray-700"></li></ul>${decimalToBinary(result)}₂`;
+			display.value = decimalToBinary(result) + '₂';
 			currentOperation = '';
 			firstOperand = '';
 			secondOperand = '';
 		}
-
 		function parseBinaryToDecimal(binary) {
 			let parts = binary.split('.');
 			let integerPart = parseInt(parts[0], 2);
@@ -217,19 +266,22 @@
 			let binaryIntegerPart = integerPart.toString(2);
 			let binaryFractionalPart = '';
 
-			while (fractionalPart > 0) {
-				fractionalPart *= 2;
-				if (fractionalPart >= 1) {
-					binaryFractionalPart += '1';
-					fractionalPart -= 1;
-				} else {
-					binaryFractionalPart += '0';
+			if (fractionalPart > 0) {
+				binaryFractionalPart = '.';
+				let count = 0;
+				while (fractionalPart > 0 && count < 5) { // Limitar a 10 dígitos fraccionarios
+					fractionalPart *= 2;
+					if (fractionalPart >= 1) {
+						binaryFractionalPart += '1';
+						fractionalPart -= 1;
+					} else {
+						binaryFractionalPart += '0';
+					}
+					count++;
 				}
-				// Limitar la longitud de la parte fraccionaria para evitar bucles infinitos
-				if (binaryFractionalPart.length > 10) break;
 			}
 
-			return binaryFractionalPart ? binaryIntegerPart + '.' + binaryFractionalPart : binaryIntegerPart;
+			return binaryIntegerPart + binaryFractionalPart;
 		}
 	</script>
 </x-app-layout>
